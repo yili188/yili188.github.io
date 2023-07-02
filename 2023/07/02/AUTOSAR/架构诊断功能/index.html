@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="AUTOSAR架构诊断功能类似于VxWorks653的HM和OMS功能。 AUTOSAR的诊断功能包括两部分：①在线诊断模式（Onboard Diagnostic System）易于被用户感知的仪表故障灯显示，在线诊断系统对ECU的软硬件及各传感器参数进行某些常见故障的实时监控与发现，当系统判断电控系统出现故障时，会以仪表警示灯亮的形式来告知驾驶者(类似于DS的FDAS功能)，并在ECU的EEPR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="AUTOSAR架构诊断功能类似于VxWorks653的HM和OMS功能。 AUTOSAR的诊断功能包括两部分：①在线诊断模式（Onboard Diagnostic System）易于被用户感知的仪表故障灯显示，在线诊断系统对ECU的软硬件及各传感器参数进行某些常见故障的实时监控与发现，当系统判断电控系统出现故障时，会以仪表警示灯亮的形式来告知驾驶者(类似于DS的FDAS功能)，并在ECU的EEPR">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-02T14:49:47.420Z">
+<meta property="article:modified_time" content="2021-08-07T13:07:07.056Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AUTOSAR/架构诊断功能" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.420Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>AUTOSAR架构诊断功能类似于VxWorks653的HM和OMS功能。</p>
+<h3 id="AUTOSAR的诊断功能包括两部分："><a href="#AUTOSAR的诊断功能包括两部分：" class="headerlink" title="AUTOSAR的诊断功能包括两部分："></a>AUTOSAR的诊断功能包括两部分：</h3><h4 id="①在线诊断模式（Onboard-Diagnostic-System）"><a href="#①在线诊断模式（Onboard-Diagnostic-System）" class="headerlink" title="①在线诊断模式（Onboard Diagnostic System）"></a>①在线诊断模式（Onboard Diagnostic System）</h4><p>易于被用户感知的仪表故障灯显示，在线诊断系统对ECU的软硬件及各传感器参数进行某些常见故障的实时监控与发现，当系统判断电控系统出现故障时，会以仪表警示灯亮的形式来告知驾驶者(类似于DS的FDAS功能)，并在ECU的EEPROM或Flash内对相关DTC（Diagnostic Trouble Codes）进行存储，以便后续车辆被送至售后处，工程师对其进行故障检测时读取分析处理（类似OMS功能）。</p>
+<h4 id="②离线诊断模式（Offboard-Diagnostic-System）"><a href="#②离线诊断模式（Offboard-Diagnostic-System）" class="headerlink" title="②离线诊断模式（Offboard Diagnostic System）"></a>②离线诊断模式（Offboard Diagnostic System）</h4><p>即将外部设备接在OBD诊断口上与整车网络各ECU进行通讯，以对各模块数据实行监控与检测分析。诊断设备通过发送满足诊断协议定义的诊断服务来实现诸如对已存储DTC的读取与清除，利用其他的整车控制指令来实现对车辆的动静态控制。</p>
+<p> 目前OEM在产品前期开发及售后过程中最常见的两种通信工具有美国英特佩斯公司的NeoVI fire(目前已有fire 2)&#x2F; RED + Vehicle SPY3及Vector的CANoe CAN。</p>
+<p>外部测试工具如何对总线ECU发起合法消息请求并进行正常通讯，并按照规则解析出反馈报文的含义，则需要参考整车网络架构中应用层的诊断通信协议定义。</p>
+<h3 id="两个最常见且较有代表性的诊断体系标准："><a href="#两个最常见且较有代表性的诊断体系标准：" class="headerlink" title="两个最常见且较有代表性的诊断体系标准："></a>两个最常见且较有代表性的诊断体系标准：</h3><h4 id="ISO-15765"><a href="#ISO-15765" class="headerlink" title="ISO 15765"></a>ISO 15765</h4><p>Road Vehicles-Diagnostics on Controller Area Network，是车辆基于CAN诊断的标准协议。通讯方面开发能力强的公司会进行协议定制，如北美通用（GM）在ISO 15765-2的基础上进行定制化开发出应用于Service Layer及Transport Layer的GMLAN，该协议也被其他某些厂家采用。</p>
+<h4 id="ISO-14229"><a href="#ISO-14229" class="headerlink" title="ISO 14229"></a>ISO 14229</h4><p>ISO 14229，也就是近年常被行业内提及的UDS protocol（Unified Diagnostic Service）。标准中定义出了诊断服务在数据链路上的独立需求。通过标准化的诊断服务，用户可以使用诊断工具（Client端）直接控制ECU（Server端）的电子燃油喷射、节气门转角、转速、ABS系统、EPS模块等（是否能联想到某前瞻扩展领域的应用）。</p>
+<h3 id="有了争端通讯协议，接下来说说诊断的两大功能："><a href="#有了争端通讯协议，接下来说说诊断的两大功能：" class="headerlink" title="有了争端通讯协议，接下来说说诊断的两大功能："></a>有了争端通讯协议，接下来说说诊断的两大功能：</h3><p>①DEM:故障诊断事件管理</p>
+<p>②DCM:故障诊断通信管理</p>
+<p>需要明白一个名词：DTC（Diagnostic Trouble Codes）</p>
+<h4 id="（1）DEM则负责直接处理与DTC相关的诊断服务"><a href="#（1）DEM则负责直接处理与DTC相关的诊断服务" class="headerlink" title="（1）DEM则负责直接处理与DTC相关的诊断服务"></a>（1）DEM则负责直接处理与DTC相关的诊断服务</h4><p>例如UDS中的0x19（读取故障码）及0x14（清除故障码）的服务，在ECU运行过程中，Monitor Function会进行持续的status检测，一旦出现疑似故障时，会直接调用DEM来进行故障check，确认后即可完成将诊断故障数据写入到EEPROM或者Flash中的过程。对于在线诊断模式（Onboard Diagnostic System），SWC在从DEM中读取到故障信息的同时，会将以故障灯的形式告知驾驶人员。</p>
+<h4 id="（2）DCM支持ISO-14229-1标准"><a href="#（2）DCM支持ISO-14229-1标准" class="headerlink" title="（2）DCM支持ISO 14229-1标准"></a>（2）DCM支持ISO 14229-1标准</h4><p>主要负责确保诊断通信数据流，及包括安全访问在内的诊断状态控制，因此支持0x10(Session Control)、0x27(Security Access)。当总线给该ECU发送UDS协议中定义的诊断请求指令时，DCM会调用DEM、SWC或者是其他基础软件模块提供的接口进行如诊断请求判断、诊断功能执行以及响应的反馈。</p>
+<h3 id="具体实现上，DCM分成三个子模块"><a href="#具体实现上，DCM分成三个子模块" class="headerlink" title="具体实现上，DCM分成三个子模块:"></a>具体实现上，DCM分成三个子模块:</h3><h4 id="诊断服务处理器（Diagnostic-Service-Processing-DSP）"><a href="#诊断服务处理器（Diagnostic-Service-Processing-DSP）" class="headerlink" title="诊断服务处理器（Diagnostic Service Processing, DSP）"></a>诊断服务处理器（Diagnostic Service Processing, DSP）</h4><p>DSP位于DCM的最上层，可理解为一个包含了通用性诊断服务的容器，用于处理各应用间共性的服务，如故障相关信息等数据的处理。当DSD完成诊断请求处理并且将请求转发出来后，DSP对该消息进行处理。</p>
+<h4 id="诊断服务调度器（Diagnostic-Service-Dispatcher-DSD）"><a href="#诊断服务调度器（Diagnostic-Service-Dispatcher-DSD）" class="headerlink" title="诊断服务调度器（Diagnostic Service Dispatcher, DSD）"></a>诊断服务调度器（Diagnostic Service Dispatcher, DSD）</h4><p>DSD位于DCM中间层，当接收到诊断请求后，会将请求转发给DSP。同样，在DSP完成诊断请求处理后，也会将响应转发出来。</p>
+<h4 id="诊断会话层（Diagnostic-Session-Layer-DSL）"><a href="#诊断会话层（Diagnostic-Session-Layer-DSL）" class="headerlink" title="诊断会话层（Diagnostic Session Layer, DSL）"></a>诊断会话层（Diagnostic Session Layer, DSL）</h4><p>DSL位于DCM最底层，主要负责接收模块上传的诊断请求并最终发送出诊断响应数据，并管理、确保诊断协议的Timing以及诊断状态。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/" data-id="cljljupv50005tgvdbojxghv8" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

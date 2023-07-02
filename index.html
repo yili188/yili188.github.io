@@ -73,10 +73,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-float类型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-AUTOSAR/软件分层架构" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/07/02/float%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time class="dt-published" datetime="2023-07-02T06:58:59.095Z" itemprop="datePublished">2023-07-02</time>
+    <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.440Z" itemprop="datePublished">2023-07-02</time>
 </a>
     
   </div>
@@ -85,14 +85,55 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="float-变量"><a href="#float-变量" class="headerlink" title="float 变量"></a>float 变量</h3><p>一般不会用float 类型去判断两变量是否相等</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="type">float</span> b = <span class="number">0.00</span>;</span><br><span class="line">    <span class="type">float</span> c = <span class="number">9.8765432198</span>;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(a == <span class="number">0</span>)		<span class="comment">//整型可以比较，但由于float不精确，不能用来比较</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a is zero\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(b&gt;= <span class="number">-0.00001</span>) &amp;&amp; (b&lt;= <span class="number">0.00001</span>);	<span class="comment">//可以用&lt;=或&gt;=来近似比较</span></span><br><span class="line">    </span><br><span class="line">    print(<span class="string">&quot;b = %f\n&quot;</span>, b);</span><br><span class="line">    <span class="comment">//结果 98765430784.000000	有效位数(不是小数点后)只有7位，与实际值差别很大</span></span><br><span class="line">    </span><br><span class="line">    <span class="type">float</span> a = <span class="number">9</span>,<span class="number">8765432198e10</span>;</span><br><span class="line">    <span class="type">float</span> b;</span><br><span class="line">    </span><br><span class="line">    b = a + <span class="number">0.1</span>;</span><br><span class="line">    print(<span class="string">&quot;a = %f\n&quot;</span>, a);</span><br><span class="line">    print(<span class="string">&quot;b = %f\n&quot;</span>, b);	<span class="comment">//结果 相等，要避免很大的数与很小的数计算，较小数会被丢弃</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <p><img src="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/image-20210809230413057.png" alt="image-20210809230413057"></p>
+<p>RTE对BSW软件进行隐藏和抽象，使得应用层软件和BSW相互隔离</p>
+<p>SWC是模块化划分、BSW是层次化划分</p>
+<p>BSW进一步划分：</p>
+<p><img src="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/image-20210809230511182.png" alt="image-20210809230511182"></p>
+<ol>
+<li>单片机抽象层（微控制器）</li>
+<li>ECU抽象层</li>
+<li>服务层</li>
+<li>复杂驱动</li>
+</ol>
+<h3 id="Microcontroller-Abstraction-Layer"><a href="#Microcontroller-Abstraction-Layer" class="headerlink" title="Microcontroller Abstraction Layer"></a>Microcontroller Abstraction Layer</h3><p>目的：</p>
+<ul>
+<li>使上层软件与微处理器(单片机)具体型号进行隔离，不管使用什么单片机的型号，最后提供的接口都是统一的，ECU抽象层在访问单片机外设时都使用相同的接口</li>
+</ul>
+<p>功能：</p>
+<ul>
+<li>包含MCU中内部外设的驱动</li>
+<li>包含使用MCU内存映射的外部设备的驱动</li>
+</ul>
+<h3 id="ECU-Abstraction-Layer"><a href="#ECU-Abstraction-Layer" class="headerlink" title="ECU Abstraction Layer"></a>ECU Abstraction Layer</h3><p>目的：软件与具体ECU硬件的设计无关，对单片机抽象层函数进行调用，把信息进行抽象（包含了引脚分配，电流、电压、频率）成应用层可用的信息 – 对板上的硬件进行抽象，对ECU输入输出设备的抽象</p>
+<p>功能：</p>
+<ul>
+<li>包含ECU板上外部设备的驱动</li>
+<li>内部设备与外部设备的接口(I&#x2F;O)</li>
+<li>表示连接到ECU的输入输出信号(如，电流、电压、频率)</li>
+<li>对上层软件隐藏ECU硬件和布局属性</li>
+<li>对总线通讯功能的抽象，为不同的总线通讯提供相同的访问机制，都是没有区别的</li>
+</ul>
+<p><img src="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/image-20210809231202028.png" alt="image-20210809231202028"></p>
+<h3 id="Complex-Drivers-复杂驱动"><a href="#Complex-Drivers-复杂驱动" class="headerlink" title="Complex Drivers 复杂驱动"></a>Complex Drivers 复杂驱动</h3><p>目的：提供复杂传感器和执行器的驱动，不包含在软件堆栈中，在基本软件堆栈中实现非标准化功能模块（用户自己开发）</p>
+<p>功能：</p>
+<ul>
+<li>重要的应用模块可以直接访问硬件资源(外设、单片机)</li>
+<li>如：喷油量控制、胎压监测</li>
+</ul>
+<h3 id="Services-Layer-服务层"><a href="#Services-Layer-服务层" class="headerlink" title="Services Layer 服务层"></a>Services Layer 服务层</h3><p>目的：提供给应用程序可用的服务</p>
+<p>功能：</p>
+<ul>
+<li>诊断，非易失性内存管理，操作系统，通信(CAN总线、LIN总线、以太网)</li>
+<li>内存和ECU管理，逻辑和时序的服务(内、外看门狗)</li>
+</ul>
+<h3 id="RTE层"><a href="#RTE层" class="headerlink" title="RTE层"></a>RTE层</h3><p>目的：使SWC和ECU的映射无关（隐藏）</p>
+<p>功能：提供通信服务的中间层(ECU内部&#x2F;间通信)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/02/float%E7%B1%BB%E5%9E%8B/" data-id="cljl6k2550002i8vd837w6mwq" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/" data-id="cljljupv60007tgvd1cdzfya0" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -104,33 +145,520 @@
 
 
   
-    <article id="post-Compiler" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-AUTOSAR/网络通讯规范COM和网络管理NM" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/07/02/Compiler/" class="article-date">
-  <time class="dt-published" datetime="2023-07-02T06:55:34.000Z" itemprop="datePublished">2023-07-02</time>
+    <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.428Z" itemprop="datePublished">2023-07-02</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/02/Compiler/">Compiler</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="No-1"><a href="#No-1" class="headerlink" title="No.1"></a>No.1</h2><h2 id="No-2"><a href="#No-2" class="headerlink" title="No.2"></a>No.2</h2>
+        <p>关于AUTOSAR的底层驱动、平台OS、平台应用、RTE、应用软件这些和VxWorks653很相似，就不多赘述了。</p>
+<p>此处说一下&#x3D;&#x3D;AUTOSAR独有的网络通讯规范和网络管理模块NM&#x3D;&#x3D;</p>
+<h3 id="一、网络通讯规范COM"><a href="#一、网络通讯规范COM" class="headerlink" title="一、网络通讯规范COM"></a>一、网络通讯规范COM</h3><p>AUTOSAR COM是AUTOSAR标准的一部分，它是从OSEK COM标准的基础上发展而来的。AUTOSAR COM提供了一种标准化的访问汽车通讯系统和ECU（Electronic Control Unit）通讯的方式，提出了一个在不同速率的总线网络之间进行数据交换的方法。它为汽车控制单元应用软件提供了一个统一的通信环境，为内部和外部通信定义了公共的软件通信接口和行为，增强了应用软件模块的可移植性。</p>
+<p>依据AUTOSAR的描述，这个跟IMA的RDIU很类似。实现不同数据协议和速率的数据的相互装换，然后发向目的ECU。</p>
+<p>AUTOSAR COM提供了基本的通信服务，它有明确的上层模块RTE(Runtime Environment)和下层模块PDU Router。</p>
+<p>在发送过程中，应用层调用COM层提供的信号或信号组发送函数，根据配置，信号或信号组的数据经过字节顺序转换后被更新到I-PDU（Interaction Layer Protocol Data Unit）中相应的位置中。AUTOSAR COM规范中同一I-PDU可以设置两种发送模式，对其中各信号的传输模式条件进行计算，I-PDU选择其中一种发送模式进行发送。然后启动发送死限监控，调用PduR_ComTransmit()函数将I-PDU发送到底层。</p>
+<p>在接收过程中，当底层接收到I-PDU时，底层将调用COM层提供的指示函数Com_RxIndication()，取消并重启接收死限监控，将I-PDU的数据从底层拷贝到COM中。调用信号或信号组的接收函数后，该I-PDU中的信号或信号组将经过字节顺序转换、符号扩展和接收过滤后，数据被拷贝到应用层。</p>
+<h4 id="通信系统核心模块的实现"><a href="#通信系统核心模块的实现" class="headerlink" title="通信系统核心模块的实现"></a>通信系统核心模块的实现</h4><p>通信系统主要实现信号或信号组的收发功能，以下主要介绍信号发送的实现。首先简要介绍一下AUTOSAR COM中特有的传输模式切换。</p>
+<h4 id="传输模式切换"><a href="#传输模式切换" class="headerlink" title="传输模式切换"></a>传输模式切换</h4><p>AUTOSAR COM规范定义了4种信号传输模式：</p>
+<ol>
+<li>直接&#x2F;N次传输模式</li>
+<li>周期传输模式</li>
+<li>混合传输模式</li>
+<li>None传输模式。</li>
+</ol>
+<p>在AUTOSAR COM规范中允许为每个I-PDU静态配置两种不同的传输模式。</p>
+<p>在AUTOSAR COM规范中通过传输模式切换，来选择I-PDU中的其中一种传输模式进行传输。</p>
+<ul>
+<li>首先使用过滤机制判断I-PDU中各信号的发送模式条件，同时更新I-PDU中的信号；</li>
+<li>再通过各信号的判断结果来计算该I-PDU的TMS（transmission mode selector）。若至少有一个C( Si,IPDUk)为True，则TMS为True；若所有C(Si,IPDUk)都为False，则TMS为False。其中C(Si,IPDUk)为传输模式条件该条件与IPDUk中的信号Si相关。</li>
+</ul>
+<p>下面通过一个用例简要说明传输模式的切换。</p>
+<p>用例中进行周期传输和直接&#x2F;N次传输之间的切换（N&#x3D;3）。<br>根据I-PDU的传输配置，当TMS（transmission mode selector）判断为真时，设置传输模式为周期传输，反之为直接&#x2F;N次传输。上层给定值V&#x3D;a（此时TMS判断为真），进行周期传输；当值V更新为b时（此时TMS判断为假），进行直接&#x2F;N次传输模式，传输三次。由图3可知，随着V值的更新该I-PDU的传输模式在这两种传输模式之间切换。</p>
+<h4 id="信号发送的实现"><a href="#信号发送的实现" class="headerlink" title="信号发送的实现"></a>信号发送的实现</h4><ul>
+<li>首先根据该信号的相关配置，判定其是内部消息还是外部消息。</li>
+<li>对于内部发送，直接将信号数据复制到接收信号数据区，并执行通知操作；</li>
+<li>对于外部发送，若该信号发送属性为触发，则该信号所属的I-PDU将立即发送（除非该I-PDU发送模式为周期传输模式），若该信号发送属性为延迟，则不进行传输，发送时，信号经过字节顺序转换后数据被复制到I-PDU中，同时设置相关更新位信息，然后根据该I-PDU的TMS切换传输模式，进行传输并设置启动相关定时器。各传输模式的传输过程与OSEK COM中大致相同。</li>
+</ul>
+<h4 id="信号接收的实现"><a href="#信号接收的实现" class="headerlink" title="信号接收的实现"></a>信号接收的实现</h4><ul>
+<li>首先判定是内部信号还是外部信号。</li>
+<li>对于内部接收，直接将信号数据复制到接收信号数据区；</li>
+<li>对于外部接收，首先判断对于的I-PDU组是否启动，若启动，返回E_OK，否则返回COM_STOP，取消并重启该I-PDU的相关死限监控定时器，将数据复制到I-PDU数据区，I-PDU中的信号经过字节书序转换、符号扩展和过滤机制后，复制到接收信号数据区，再执行通知操作，通知上层软件调用相关API函数接收信号。</li>
+</ul>
+<h3 id="二-网络管理NM"><a href="#二-网络管理NM" class="headerlink" title="二. 网络管理NM"></a>二. 网络管理NM</h3><p>这里的NM主要是针对Can协议的网路管理。</p>
+<p>AUTOSAR CanNM的核心思想主要归纳为以下两条：</p>
+<ol>
+<li><p>如果节点需要保持通信，则节点需要周期的发送NMPDUs，否则停止发送NMPDUs</p>
+</li>
+<li><pre><code>如果总线上的所有节点不需要使用总线，那么总线上过了一段时间没有NMPDUs时，则会进入Bus-Sleep Mode。
+</code></pre>
+</li>
+</ol>
+<h4 id="工作模式和状态"><a href="#工作模式和状态" class="headerlink" title="工作模式和状态"></a>工作模式和状态</h4><p>CanNm一共有三个工作模式</p>
+<ol>
+<li><p>Network Mode</p>
+</li>
+<li><p>PrepareBus-Sleep Mode</p>
+</li>
+<li><p>Bus-Sleep Mode</p>
+</li>
+</ol>
+<p>模式的改变应该通过回调函数通知上层。</p>
+<p>下面单独说每种模式</p>
+<h5 id="（1）Network-Mode"><a href="#（1）Network-Mode" class="headerlink" title="（1）Network Mode"></a>（1）Network Mode</h5><p>Network Mode又包括三个内部状态</p>
+<ol>
+<li>Repeat Message State</li>
+<li>Normal Operation State</li>
+<li>Ready Sleep State</li>
+</ol>
+<p>①Repeat Message State</p>
+<p>这个模式被用来确保从Bus-Sleep or Prepare Bus-Sleep到Network Mode的节点被总线上面其他节点发现。这个状态可以用来检测总线上的节点。<br>当进入Repeat Message State时，节点应该开始传送NMPDUs。<br>在Repeat Message State时，当NM-Timeout Timer溢出，CanNm模块应该重载Timer。<br>CanNm模块应该在Repeat Message State 下保持一段时间，这段时间可以通过CANNM_REPEAT_MESSAGE_TIME来进行配置。<br>当离开Repeat Message State的时候，如果节点需要通信，则进入Normal Operation State；如果节点不需要通信，则进入Ready Sleep State。并且清空Repeat Message Bit。</p>
+<p>②Normal Operation State</p>
+<p>这个状态可以保持总线处于唤醒状态。从Ready sleep state进入这个状态的时候应该发送NMPDUs。<br>在Normal Operation State当NM-Timeout Timer溢出，CanNm模块应该重载Timer。<br>如果节点不需要使用通信，则网络应该被释放，节点应该进入Ready Sleep State。<br>如果节点接收到Repeat Message Request Bit，则节点进入Repeat Message State。如果节点自身需要进入Repeat Message State，则该节点进入Repeat Message State并且设置Repeat Message Request Bit。</p>
+<p>③ReadySleep State</p>
+<p>这个状态是为了如果本节点已经准备释放总线，而其他节点还需要使用总线的时候，在这个状态下等待其他总线上的节点进入Perpere Bus-Sleep Mode。进入这个状态之后，CanNm模块应该停止NMPDUs的传送。<br>如果NM-Timeout Timer溢出，节点将会进入Prepare Bus-Sleep Mode。<br>如果该节点需要使用总线，则节点进入Nomal Operation State。<br>如果节点接收到Repeat Message Request Bit，则节点进入Repeat Message State。如果节点自身需要进入Repeat Message State，则该节点进入Repeat Message State并且设置Repeat Message Request Bit。</p>
+<h5 id="（2）PrepareBus-Sleep-Mode"><a href="#（2）PrepareBus-Sleep-Mode" class="headerlink" title="（2）PrepareBus-Sleep Mode"></a>（2）PrepareBus-Sleep Mode</h5><p>这个状态是为了等待总线上的所有节点能够在进入Bus-Sleep Mode之前，有时间停止节点的active状态如清空队列中为发送的报文。在Prepare Bus –Sleep Mode下，所有节点都静默下来。</p>
+<p>当节点进入PrepareBus Mode时，应该通知上层应用。通过配置CANNM_WAIT_BUS_SLEEP_TIME参数，可以改变节点在PrepareBus-Sleep Mode停留的时间，在这段时间之后节点将会进入其他状态。</p>
+<p>在Prepare Bus-Sleep Mode下面接收到NMPDU或者被上层应用请求通信时，节点将进入Network Mode中的Normal operation State。</p>
+<h5 id="（3）Bus-SleepMode"><a href="#（3）Bus-SleepMode" class="headerlink" title="（3）Bus-SleepMode"></a>（3）Bus-SleepMode</h5><p>Bus-Sleep Mode的目的是当没有消息被传送的时候可以减少能量的消耗。</p>
+<p>在Bus-Sleep Mode下面，节点可以被唤醒（如本地唤醒源和CAN线唤醒源）。CANNM_TIMEOUT_TIME+CANNM_WAIT_BUS_SLEEP_TIME两个参数在整个总线上面的节点都应该时一样的配置，保证了总线上的节点能够统一的进行休眠。</p>
+<p>当进入Bus-Sleep Mode时候，应该通知上层应用。</p>
+<p>在Bus-Sleep Mode下，如果成功接收到NMPDU，CAN NM模块应该调用Nm_NetworkStartIndication。</p>
+<p>如果CanNm_PassiveStartUp被调用，则CAN NM模块进入Network Mode 中的Repeat Message State。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/02/Compiler/" data-id="cljl6k24t0000i8vdhma9be8y" data-title="Compiler" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/" data-id="cljljupv50006tgvd1on8g094" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AUTOSAR/架构诊断功能" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.420Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>AUTOSAR架构诊断功能类似于VxWorks653的HM和OMS功能。</p>
+<h3 id="AUTOSAR的诊断功能包括两部分："><a href="#AUTOSAR的诊断功能包括两部分：" class="headerlink" title="AUTOSAR的诊断功能包括两部分："></a>AUTOSAR的诊断功能包括两部分：</h3><h4 id="①在线诊断模式（Onboard-Diagnostic-System）"><a href="#①在线诊断模式（Onboard-Diagnostic-System）" class="headerlink" title="①在线诊断模式（Onboard Diagnostic System）"></a>①在线诊断模式（Onboard Diagnostic System）</h4><p>易于被用户感知的仪表故障灯显示，在线诊断系统对ECU的软硬件及各传感器参数进行某些常见故障的实时监控与发现，当系统判断电控系统出现故障时，会以仪表警示灯亮的形式来告知驾驶者(类似于DS的FDAS功能)，并在ECU的EEPROM或Flash内对相关DTC（Diagnostic Trouble Codes）进行存储，以便后续车辆被送至售后处，工程师对其进行故障检测时读取分析处理（类似OMS功能）。</p>
+<h4 id="②离线诊断模式（Offboard-Diagnostic-System）"><a href="#②离线诊断模式（Offboard-Diagnostic-System）" class="headerlink" title="②离线诊断模式（Offboard Diagnostic System）"></a>②离线诊断模式（Offboard Diagnostic System）</h4><p>即将外部设备接在OBD诊断口上与整车网络各ECU进行通讯，以对各模块数据实行监控与检测分析。诊断设备通过发送满足诊断协议定义的诊断服务来实现诸如对已存储DTC的读取与清除，利用其他的整车控制指令来实现对车辆的动静态控制。</p>
+<p> 目前OEM在产品前期开发及售后过程中最常见的两种通信工具有美国英特佩斯公司的NeoVI fire(目前已有fire 2)&#x2F; RED + Vehicle SPY3及Vector的CANoe CAN。</p>
+<p>外部测试工具如何对总线ECU发起合法消息请求并进行正常通讯，并按照规则解析出反馈报文的含义，则需要参考整车网络架构中应用层的诊断通信协议定义。</p>
+<h3 id="两个最常见且较有代表性的诊断体系标准："><a href="#两个最常见且较有代表性的诊断体系标准：" class="headerlink" title="两个最常见且较有代表性的诊断体系标准："></a>两个最常见且较有代表性的诊断体系标准：</h3><h4 id="ISO-15765"><a href="#ISO-15765" class="headerlink" title="ISO 15765"></a>ISO 15765</h4><p>Road Vehicles-Diagnostics on Controller Area Network，是车辆基于CAN诊断的标准协议。通讯方面开发能力强的公司会进行协议定制，如北美通用（GM）在ISO 15765-2的基础上进行定制化开发出应用于Service Layer及Transport Layer的GMLAN，该协议也被其他某些厂家采用。</p>
+<h4 id="ISO-14229"><a href="#ISO-14229" class="headerlink" title="ISO 14229"></a>ISO 14229</h4><p>ISO 14229，也就是近年常被行业内提及的UDS protocol（Unified Diagnostic Service）。标准中定义出了诊断服务在数据链路上的独立需求。通过标准化的诊断服务，用户可以使用诊断工具（Client端）直接控制ECU（Server端）的电子燃油喷射、节气门转角、转速、ABS系统、EPS模块等（是否能联想到某前瞻扩展领域的应用）。</p>
+<h3 id="有了争端通讯协议，接下来说说诊断的两大功能："><a href="#有了争端通讯协议，接下来说说诊断的两大功能：" class="headerlink" title="有了争端通讯协议，接下来说说诊断的两大功能："></a>有了争端通讯协议，接下来说说诊断的两大功能：</h3><p>①DEM:故障诊断事件管理</p>
+<p>②DCM:故障诊断通信管理</p>
+<p>需要明白一个名词：DTC（Diagnostic Trouble Codes）</p>
+<h4 id="（1）DEM则负责直接处理与DTC相关的诊断服务"><a href="#（1）DEM则负责直接处理与DTC相关的诊断服务" class="headerlink" title="（1）DEM则负责直接处理与DTC相关的诊断服务"></a>（1）DEM则负责直接处理与DTC相关的诊断服务</h4><p>例如UDS中的0x19（读取故障码）及0x14（清除故障码）的服务，在ECU运行过程中，Monitor Function会进行持续的status检测，一旦出现疑似故障时，会直接调用DEM来进行故障check，确认后即可完成将诊断故障数据写入到EEPROM或者Flash中的过程。对于在线诊断模式（Onboard Diagnostic System），SWC在从DEM中读取到故障信息的同时，会将以故障灯的形式告知驾驶人员。</p>
+<h4 id="（2）DCM支持ISO-14229-1标准"><a href="#（2）DCM支持ISO-14229-1标准" class="headerlink" title="（2）DCM支持ISO 14229-1标准"></a>（2）DCM支持ISO 14229-1标准</h4><p>主要负责确保诊断通信数据流，及包括安全访问在内的诊断状态控制，因此支持0x10(Session Control)、0x27(Security Access)。当总线给该ECU发送UDS协议中定义的诊断请求指令时，DCM会调用DEM、SWC或者是其他基础软件模块提供的接口进行如诊断请求判断、诊断功能执行以及响应的反馈。</p>
+<h3 id="具体实现上，DCM分成三个子模块"><a href="#具体实现上，DCM分成三个子模块" class="headerlink" title="具体实现上，DCM分成三个子模块:"></a>具体实现上，DCM分成三个子模块:</h3><h4 id="诊断服务处理器（Diagnostic-Service-Processing-DSP）"><a href="#诊断服务处理器（Diagnostic-Service-Processing-DSP）" class="headerlink" title="诊断服务处理器（Diagnostic Service Processing, DSP）"></a>诊断服务处理器（Diagnostic Service Processing, DSP）</h4><p>DSP位于DCM的最上层，可理解为一个包含了通用性诊断服务的容器，用于处理各应用间共性的服务，如故障相关信息等数据的处理。当DSD完成诊断请求处理并且将请求转发出来后，DSP对该消息进行处理。</p>
+<h4 id="诊断服务调度器（Diagnostic-Service-Dispatcher-DSD）"><a href="#诊断服务调度器（Diagnostic-Service-Dispatcher-DSD）" class="headerlink" title="诊断服务调度器（Diagnostic Service Dispatcher, DSD）"></a>诊断服务调度器（Diagnostic Service Dispatcher, DSD）</h4><p>DSD位于DCM中间层，当接收到诊断请求后，会将请求转发给DSP。同样，在DSP完成诊断请求处理后，也会将响应转发出来。</p>
+<h4 id="诊断会话层（Diagnostic-Session-Layer-DSL）"><a href="#诊断会话层（Diagnostic-Session-Layer-DSL）" class="headerlink" title="诊断会话层（Diagnostic Session Layer, DSL）"></a>诊断会话层（Diagnostic Session Layer, DSL）</h4><p>DSL位于DCM最底层，主要负责接收模块上传的诊断请求并最终发送出诊断响应数据，并管理、确保诊断协议的Timing以及诊断状态。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/" data-id="cljljupv50005tgvdbojxghv8" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AUTOSAR/为什么汽车软件开发要用AutoSar" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.412Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="汽车软件的发展趋势"><a href="#汽车软件的发展趋势" class="headerlink" title="汽车软件的发展趋势"></a>汽车软件的发展趋势</h3><p>高内聚、低耦合、OTA</p>
+<ol>
+<li>预装系统</li>
+<li>改写、升级、更新</li>
+<li>环境学习、迭代、优化、个性化</li>
+</ol>
+<ul>
+<li>标准化的硬件</li>
+<li>通过软件的迭代、优化、升级、来实现功能</li>
+</ul>
+<h4 id="挑战："><a href="#挑战：" class="headerlink" title="挑战："></a>挑战：</h4><ul>
+<li>架构设计的挑战</li>
+<li>功能安全的挑战</li>
+<li>信息安全的挑战</li>
+</ul>
+<p>车上的ECU(处理器)很多 –&gt; 操作系统适配 –&gt; 应用程序的移植性差</p>
+<h4 id="OSEK规范"><a href="#OSEK规范" class="headerlink" title="OSEK规范"></a>OSEK规范</h4><ul>
+<li>操作系统规范</li>
+<li>通信规范（CAN）</li>
+<li>网络管理规范</li>
+<li>OSEK实现语言</li>
+</ul>
+<h4 id="AUTOSAR"><a href="#AUTOSAR" class="headerlink" title="AUTOSAR"></a>AUTOSAR</h4><p>是基于OSEK提出的，操作系统是OSEK的延申</p>
+<p>是一个国际组织，是一套汽车软件开发的方法论，是一个软件架构</p>
+<p>&#x3D;&#x3D;统一的框架、方法论、接口&#x3D;&#x3D;</p>
+<p>整车的功能分配到一个个ECU上，搭好每个ECU的框架（几个CAN、以太网…），在Matlab中功能的实现(上层的应用)，中间件（操作系统–AutoSar）根据每个情况进行配置，全部按照同一的规范来做，编程C代码烧到控制板上。</p>
+<p>把共性的功能抽取，在各个控制器中重用各种已经开发的应用算法。</p>
+<p>标准化接口及层次化隔离，有利于应用、BSW、Driver、算法等分布式开发，从而大幅提高汽车电子的研发效率和研发质量。</p>
+<ol>
+<li>SWC设计工具（顶层）<ul>
+<li>开发人员编写的应用程序在AUTOSAR中被称为软件组件</li>
+</ul>
+</li>
+<li>RTE配置工具<ul>
+<li>运行时间环境，实现了应用程序与基础软件间的分离，使SWC与ECU的映射无关，负责应用程序与基础软件间的数据交换</li>
+<li>虚拟功能总线的具体实现，完成运行实体到操作系统的映射</li>
+</ul>
+</li>
+<li>BSW配置工具+BSW静态代码<ul>
+<li>基础软件，为ECU提供基础的通信服务等功能，与硬件有关。AUTOSAR规范最主要的内容就是定义了底层软件的通用功能。</li>
+</ul>
+</li>
+<li>MCAL配置工具+MCAL静态代码（底层）</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/" data-id="cljljupv40004tgvdayn19cke" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AUTOSAR/2.Runtime environment (RTE)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.142Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808224700706.png" alt="image-20210808224700706"></p>
+<ol>
+<li>RTE以上，即VFB view，所有的SWC通过RTE总线进行相互连接、调用</li>
+<li>RTE以下，即基础软件层BSW</li>
+</ol>
+<p>功能：</p>
+<ol>
+<li>对底层软件的抽象化</li>
+<li>数据的通讯</li>
+<li>任务的调度</li>
+</ol>
+<p>VFB的具体实现</p>
+<ul>
+<li>配置：runnables对OS的tasks的映射</li>
+<li>通过RTE的事件触发runnables的运行</li>
+<li>生成调用runnables的task代码</li>
+<li>对OS操作系统中tasks,events,alarms的配置</li>
+<li>根据每个ECU进行定制</li>
+<li>抽象了OS, 防止SWC直接访问OS和BSW</li>
+</ul>
+<img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808225218955.png" alt="image-20210808225218955" style="zoom:50%;">
+
+<h4 id="RTE触发事件–-gt-对函数的调用（调用功能）"><a href="#RTE触发事件–-gt-对函数的调用（调用功能）" class="headerlink" title="RTE触发事件–&gt;对函数的调用（调用功能）"></a>RTE触发事件–&gt;对函数的调用（调用功能）</h4><p>RTE触发事件对runnable进行调用</p>
+<ol>
+<li>SWC对函数的调用</li>
+<li>ECU-M模块调用函数改变RTE状态</li>
+<li>回调函数COM</li>
+<li>操作系统事件生成</li>
+</ol>
+<p><img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210809222633367.png" alt="image-20210809222633367"></p>
+<h4 id="RTE数据交互功能"><a href="#RTE数据交互功能" class="headerlink" title="RTE数据交互功能"></a>RTE数据交互功能</h4><ul>
+<li>RTE作为SWC和BSW之间的通信机构</li>
+<li>RTE是VFB的实现（数据交互）<ul>
+<li>Sender-Receiver</li>
+<li>Client-Server</li>
+<li>Intra-ECU and Inter-ECU (via COM)</li>
+<li>RTE implements callbacks of AR-COM</li>
+</ul>
+</li>
+<li>Other features<ul>
+<li>保证数据一致性（exclusive area）–数据校验</li>
+<li>支持简单数据及复杂数据（records 结构体）</li>
+<li>SW-C 可以实现多副本（相同类型的不同SW-C）</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/" data-id="cljljupv30003tgvdddoxb7bs" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AUTOSAR/1.基础软件层(BSW)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/1.%E5%9F%BA%E7%A1%80%E8%BD%AF%E4%BB%B6%E5%B1%82(BSW)/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.137Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h6 id><a href="#" class="headerlink" title></a><img src="https://img-blog.csdnimg.cn/20181113151746946.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvY29jZW5zdGFy,size_16,color_FFFFFF,t_70" alt="img" style="zoom:100%;"></h6><p>这一部分的基础软件层，和我比较熟悉的IMA的平台应用很相似，包括了&#x3D;&#x3D;操作系统&#x3D;&#x3D;，以及一些&#x3D;&#x3D;基本平台服务&#x3D;&#x3D;，比如FIDO&#x2F;DL&#x2F;HM&#x2F;SM等，以及各个&#x3D;&#x3D;IO接口驱动&#x3D;&#x3D;等。</p>
+<h4 id="功能介绍："><a href="#功能介绍：" class="headerlink" title="功能介绍："></a>功能介绍：</h4><ul>
+<li><p>系统服务：提高标准化，与ECU相关的服务（操作系统、看门狗、定时器、存储器）</p>
+<ul>
+<li><p>一组模块和功能，可供所有层的模块使用。</p>
+</li>
+<li><p>为应用程序和基本软件模块提供基本服务</p>
+</li>
+</ul>
+</li>
+<li><p>存储器服务：对内外部的存储器的访问，贯穿了三个层次</p>
+</li>
+<li><p>通信服务：CAN通讯、LIN通讯、flexRay，给底层的通讯网络的驱动及在ECU硬件上的信息抽象，提供标准的通讯的服务函数给应用层使用</p>
+</li>
+<li><p>I&#x2F;O：直接与应用层交互</p>
+</li>
+</ul>
+<h4 id="层次介绍："><a href="#层次介绍：" class="headerlink" title="层次介绍："></a>层次介绍：</h4><ol>
+<li><p>微控制器抽象层：</p>
+<ul>
+<li><p>由以下模块组组成：微控制器驱动程序、内存驱动I&#x2F;O驱动程序、加密驱动程序、无线通讯驱动</p>
+</li>
+<li><p>对单片机的抽象，传统方法需对不同单片机深入研究，而用标准化接口访问而不用研究内部机制。</p>
+</li>
+</ul>
+</li>
+<li><p>复杂驱动：</p>
+<ul>
+<li>直接访问单片机</li>
+<li>满足复杂传感器和执行器的特殊功能和时序要求（喷油控制、电磁阀驱动）</li>
+<li>可自己编写程序满足时序要求</li>
+</ul>
+</li>
+<li><p>ECU抽象层：</p>
+<ul>
+<li>(I&#x2F;O 硬件抽象)对ECU输入输出设备的抽象<ul>
+<li>比如，把开关信号的高低电平解释成ON OFF信号，不需要关心信号从哪里获得</li>
+</ul>
+</li>
+<li>(通讯硬件驱动) 对总线通讯功能的抽象，为不同的总线通讯提供相同的访问机制<ul>
+<li>LIN、CAN不论对应的控制器位于单片机的内部或外部，都能抽象，通讯都是一致的；</li>
+<li>包含：CAN interface、CAN收发器的驱动、CAN控制器的驱动</li>
+</ul>
+</li>
+<li>(储存器抽象)</li>
+</ul>
+</li>
+</ol>
+<h4 id="具体的组件及功能："><a href="#具体的组件及功能：" class="headerlink" title="具体的组件及功能："></a>具体的组件及功能：</h4><ol>
+<li><p>系统：提供标准化的规定（针对操作系统、定时器以及错误存储器）、ECU特定的服务（ECU状态管理、看门狗管理）和库函数；</p>
+</li>
+<li><p>内存：对内部和外部的内存（非易失性存储器）的访问入口进行标准化；</p>
+</li>
+<li><p>通信：对汽车网络系统、ECU通信系统以及ECU内部软件的访问入口进行标准化；</p>
+<ul>
+<li>通信硬件抽象与通信驱动程序的连接</li>
+</ul>
+</li>
+<li><p>输入&#x2F;输出：对传感器、执行器以及ECU外设的访问入口进行标准化；</p>
+<p>同时，基础软件层模块按照类型可以分为驱动模块、接口模块、处理模块以及管理器。</p>
+</li>
+</ol>
+<h4 id="01-驱动模块"><a href="#01-驱动模块" class="headerlink" title="01.驱动模块"></a>01.驱动模块</h4><p>分为内部驱动和外部驱动。</p>
+<ol>
+<li>内部驱动内部器件位于&#x3D;&#x3D;微控制器（单片机）的内部&#x3D;&#x3D;，比如内部EEPROM、内部CAN控制器、内部ADC模块等。内部驱动程序就是针对单片机内部器件资源的驱动程序，这部分驱动程序属于微控制器抽象层（MCAL）。</li>
+<li>外部驱动外部器件是指&#x3D;&#x3D;单片机外部的ECU硬件&#x3D;&#x3D;，比如外部EEPROM、外部看门狗、外部Flash等。</li>
+</ol>
+<h4 id="02-接口模块"><a href="#02-接口模块" class="headerlink" title="02.接口模块"></a>02.接口模块</h4><p>接口模块包含了对&#x3D;&#x3D;其次级模块进行抽象&#x3D;&#x3D;的功能，比如对一个特定功能的硬件进行抽象。它提供一个通用的&#x3D;&#x3D;接口函数（API）&#x3D;&#x3D;来访问一种特定的器件类型，且与该类型器件的数目无关，同时也与器件的具体硬件实现无关。接口模块不会改变数据的内容。一般来说，接口属于&#x3D;&#x3D;ECU抽象层&#x3D;&#x3D;。例如，CAN通信系统的接口模块提供一个通用的接口函数来访问CAN通信网络，并且与ECU上CAN控制器的数目以及硬件实现无关。</p>
+<h4 id="03-处理模块（排队函数）"><a href="#03-处理模块（排队函数）" class="headerlink" title="03.处理模块（排队函数）"></a>03.处理模块（排队函数）</h4><p>处理模块是一个专用的接口，它控制一个或多个客户端对一个或多个驱动程序进行并行、多重以及异步地访问。也就是说，它起着缓冲、队列、仲裁以及多路复用的功能。同时，处理程序也不会改变数据本身的内容。处理模块通常会并入驱动程序或是接口模块中（如SPIHandlerDriver、ADC Driver等）。</p>
+<h4 id="04-管理器"><a href="#04-管理器" class="headerlink" title="04.管理器"></a>04.管理器</h4><p>管理器为多重的客户端提供特定的服务。当单纯的处理程序不能满足对多重的客户端进行抽象时，就需要用到管理器来进行处理。除了处理功能外，管理器还可以对数据内容进行评估、改变或是适应数据内容。一般而言，&#x3D;&#x3D;管理器属于服务层&#x3D;&#x3D;。例如，非易失性随机存储器（NVRAM）的管理器负责对内部或是外部存储设备进行并行的访问，如Flash、EEPROM存储器等。同时，它也可以完成分布式并且可靠的数据存储、数据校验以及默认值的规定等。</p>
+<h4 id="05-库函数"><a href="#05-库函数" class="headerlink" title="05.库函数"></a>05.库函数</h4><p>通用功能的函数的集合。如，浮点数的运算、差值运算、E2E保护。可以由BSW进行调用，也可由SWC进行调用。</p>
+<h4 id="CAN通信服务"><a href="#CAN通信服务" class="headerlink" title="CAN通信服务"></a>CAN通信服务</h4><p>一组用于与通信系统CAN进行车辆网络通信的模块</p>
+<p>为CAN网络提供统一的接口</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/1.%E5%9F%BA%E7%A1%80%E8%BD%AF%E4%BB%B6%E5%B1%82(BSW)/" data-id="cljljupv20002tgvd64jc78zi" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AUTOSAR/1.1.微控制器抽象层MCAL(驱动层)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/1.1.%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E6%8A%BD%E8%B1%A1%E5%B1%82MCAL(%E9%A9%B1%E5%8A%A8%E5%B1%82)/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.132Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="四个部分"><a href="#四个部分" class="headerlink" title="四个部分"></a>四个部分</h3><h4 id="1-微控制器驱动"><a href="#1-微控制器驱动" class="headerlink" title="1.微控制器驱动"></a>1.微控制器驱动</h4><p>主要是微控制器相关的驱动。比如：通用定时器驱动（General Purpose Driver,GPT Driver）、看门狗驱动（Watchdog Driver,WDG Driver）、微控制器单元驱动（Microcontroller Unit Driver,MCU Driver）和内核测试（Core Test）四个部分组成。</p>
+<h5 id="01-GPT-Driver"><a href="#01-GPT-Driver" class="headerlink" title="01.GPT Driver"></a>01.GPT Driver</h5><p>在AUTOSAR中有两类定时器，操作系统定时器和硬件定时器。该模块使用通用定时器单元的硬件定时器通道，为操作系统或者其他基础软件模块提供计时功能。</p>
+<p>作用：</p>
+<ul>
+<li>启动和停止硬件定时器；</li>
+<li>得到定时器数值；</li>
+<li>控制时间触发的中断；</li>
+<li>控制时间触发的中断唤醒。</li>
+</ul>
+<h5 id="02-WDG-Driver"><a href="#02-WDG-Driver" class="headerlink" title="02.WDG Driver"></a>02.WDG Driver</h5><p>WDG Driver的功能主要是初始化和触发看门狗。WDG Driver有内部WDG Driver和外部WDG Driver。内部WDG Driver控制MCU的内部看门狗定时器，提供触发功能和模式选择服务；外部WDG Driver控制外部硬件看门狗，与内部WDG Driver一样，提供触发功能和模式选择服务。</p>
+<h5 id="03-MCU-Driver"><a href="#03-MCU-Driver" class="headerlink" title="03.MCU Driver"></a>03.MCU Driver</h5><p>MCU Driver位于MCAL层，可以直接访问微控制器硬件，它的主要功能是初始化、休眠、复位微控制器以及提供其他MCAL软件模块所需的与微控制器相关的特殊功能。MCU Driver还能够使能并设置MCU时钟，例如CPU时钟、外围器件时钟、预分频器等参数。</p>
+<h5 id="04-Core-Test"><a href="#04-Core-Test" class="headerlink" title="04.Core Test"></a>04.Core Test</h5><p>Core Test（内核测试）模块包含周期性测试和启动测试。内核测试模块可以对CPU所有寄存器进行测试，提供中断控制和异常检测。该模块还对算术逻辑单元、存储保护单元和缓存控制器等进行检测。</p>
+<h4 id="2-存储器驱动"><a href="#2-存储器驱动" class="headerlink" title="2.存储器驱动"></a>2.存储器驱动</h4><p>存储器驱动由内部EEPROM驱动、内部Flash驱动、RAM测试和Flash测试四部分组成。</p>
+<h5 id="01-内部EEPROM驱动"><a href="#01-内部EEPROM驱动" class="headerlink" title="01.内部EEPROM驱动"></a>01.内部EEPROM驱动</h5><p>内部EEPROM驱动提供初始化服务，以及对内部EEPROM的读写、写、擦除等操作。该驱动模块一次只能接受一个任务。</p>
+<h5 id="02-内部Flash驱动"><a href="#02-内部Flash驱动" class="headerlink" title="02.内部Flash驱动"></a>02.内部Flash驱动</h5><p>内部Flash驱动提供内部Flash初始化服务，以及对内部Flash的读、写、擦除等操作。该驱动还可以将Flash访问代码下载到RAM中，如果需要的话，也可以执行写、擦除操作。</p>
+<h5 id="03-RAM测试"><a href="#03-RAM测试" class="headerlink" title="03.RAM测试"></a>03.RAM测试</h5><p>RAM测试模块通过软件对RAM存储进行测试。该模块包含后台测试和前台测试。其中，后台测试是异步服务，前台测试是同步服务。</p>
+<h5 id="04-Flash测试"><a href="#04-Flash测试" class="headerlink" title="04.Flash测试"></a>04.Flash测试</h5><p>Flash测试模块提供算法来测试诸如数据&#x2F;程序闪存、程序SRAM等非易失性存储器，这些存储器可以是集成在微控制器内部的，也可以是外部映射到微控制器的存储器。</p>
+<h4 id="3-通信驱动"><a href="#3-通信驱动" class="headerlink" title="3.通信驱动"></a>3.通信驱动</h4><p>通信驱动由以太网（Ethernet）驱动、FlexRay驱动、CAN驱动、LIN驱动和SPI驱动五部分组成。</p>
+<h5 id="01-Ethernet驱动"><a href="#01-Ethernet驱动" class="headerlink" title="01.Ethernet驱动"></a>01.Ethernet驱动</h5><p>Ethernet驱动模块为以太网提供统一的接口。该驱动模块对所使用的以太网控制器的硬件特性进行了抽象。以太网接口模块使用以太网驱动层访问某些控制器。以太网驱动层由若干个以太网驱动模块组成。</p>
+<h5 id="02-FlexRay驱动"><a href="#02-FlexRay驱动" class="headerlink" title="02.FlexRay驱动"></a>02.FlexRay驱动</h5><p>FlexRay驱动用来抽象不同的FlexRay通信控制器及其硬件相关的特性。通信控制器的FlexRay协议强制特性经过封装后只能通过统一的API进行访问。API提供了映射到基于实际通信控制器的硬件访问序列的抽象功能操作。因此，使用FlexRay驱动可以保证FlexRay接口独立于硬件。</p>
+<p>对内部或外部FlexRay通信控制器的驱动来说，需要进行下列处理：</p>
+<ul>
+<li>FlexRay控制器的初始化；</li>
+<li>配置数据处理单元；</li>
+<li>控制指令向通信控制器的传递；</li>
+<li>从协议引擎到控制器主接口状态数据的规定；</li>
+<li>通信控制器和主处理机之间信息数据的传输。</li>
+</ul>
+<h5 id="03-CAN驱动"><a href="#03-CAN驱动" class="headerlink" title="03.CAN驱动"></a>03.CAN驱动</h5><p>CAN驱动针对的是微控制器内部的CAN控制器，它可以实现以下功能：</p>
+<ul>
+<li><p>对CAN控制器进行初始化；</p>
+</li>
+<li><p>发送和接收报文；</p>
+</li>
+<li><p>对报文的数据和功能进行通知（对接收报文的指示、对发送报文的确认）；</p>
+</li>
+<li><p>溢出和错误处理；</p>
+</li>
+<li><p>唤醒检测。</p>
+</li>
+</ul>
+<p>此外，CAN驱动还具有以下特性：单个或多个CAN通道、CAN驱动的多重实例化、对接收报文的中断&#x2F;轮询模式。</p>
+<p>CAN驱动是MCAL的一部分，可以执行硬件访问、向上层提供独立于硬件的API，而仅有的能够访问CAN驱动的上层是CAN接口（CAN Interface）。CAN驱动也可以为数据传输的初始化和通知接收事件的回调函数提供服务，该服务也是独立于硬件的。除此之外，CAN驱动也可以控制从属于同一个CAN硬件单元的CAN控制器的行为和状态。</p>
+<h5 id="04-LIN驱动"><a href="#04-LIN驱动" class="headerlink" title="04.LIN驱动"></a>04.LIN驱动</h5><p>LIN驱动使用标准的通用异步收发器（Universal Asynchronous Receiver Transmitter,UART）或者串行通信接口（Serial Communication Interface,SCI）进行通信。</p>
+<p>该模块可以完成下列任务：</p>
+<ul>
+<li><p>LIN硬件的初始化；</p>
+</li>
+<li><p>调度表的处理；</p>
+</li>
+<li><p>LIN报文的发送（通过标志位和函数接口确认）；</p>
+</li>
+<li><p>LIN报文的接收（通过标志位和函数接口指示）；</p>
+</li>
+<li><p>睡眠和唤醒；</p>
+</li>
+<li><p>协议差错的处理；</p>
+</li>
+<li><p>报文的超时监测。</p>
+</li>
+</ul>
+<p>LIN驱动也是MCAL的一部分，可以执行硬件访问、向上层提供独立于硬件的API。仅有的能够访问LIN驱动的上层是LIN接口（LIN Interface）。一个LIN驱动可以支持多个通道，但是这些通道要属于同一个LIN硬件单元。</p>
+<h5 id="05-SPI驱动"><a href="#05-SPI驱动" class="headerlink" title="05.SPI驱动"></a>05.SPI驱动</h5><p>SPI驱动模块是微控制器内部同步通信串行接口的驱动。SPI驱动为SPI总线上不同的设备（如EEPROM&#x2F;Watchdog等）提供读写访问服务。一个SPI设备可以被所使用的SPI硬件和相关的片选信号识别。该模块可以在主、从或者主-从模式下运行。</p>
+<p>配置SPI驱动应遵循以下步骤：</p>
+<ul>
+<li><p>选择SPI驱动的功能级别，配置可选择的功能特性；</p>
+</li>
+<li><p>根据数据用途来定义SPI通道，它们可以是SPI驱动的内部缓冲器，或者是由用户提供的外部缓冲器；</p>
+</li>
+<li><p>根据硬件属性来定义SPI任务，它们会包含一系列使用这些属性的通道；</p>
+</li>
+<li><p>定义任务序列，以优先级排序的方式来传递数据。</p>
+</li>
+</ul>
+<h4 id="4-I-x2F-O驱动"><a href="#4-I-x2F-O驱动" class="headerlink" title="4.I&#x2F;O驱动"></a>4.I&#x2F;O驱动</h4><p>I&#x2F;O驱动由PORT驱动、DIO驱动、ADC驱动、PWM驱动、ICU驱动、OCU驱动六部分组成。</p>
+<h5 id="01-PORT驱动"><a href="#01-PORT驱动" class="headerlink" title="01.PORT驱动"></a>01.PORT驱动</h5><p>PORT驱动初始化就是对微控制器的整个PORT模块进行初始化配置。</p>
+<p>很多端口和管脚被分配有多种不同的功能，即可以进行引脚功能复用，比如通用I&#x2F;O、模数转换、脉宽调制等功能。因此，对PORT必须有一个整体的配置和初始化，对各管脚的具体配置和使用取决于微控制器和ECU的引脚功能分配。PORT初始化数据应当尽可能高效地写到每个端口。DIO驱动中所用到的端口的配置和初始化都是在PORT驱动模块中完成的。因此，在使用DIO功能之前，应先进行PORT的初始化。</p>
+<h5 id="02-DIO驱动"><a href="#02-DIO驱动" class="headerlink" title="02.DIO驱动"></a>02.DIO驱动</h5><p>DIO驱动对微控制器硬件管脚的访问进行了抽象，除此之外，还可以对管脚进行分组。该模块通过DIO通道、DIO端口以及DIO通道组来读写数据，而且这类操作是同步的。</p>
+<h5 id="03-ADC驱动"><a href="#03-ADC驱动" class="headerlink" title="03.ADC驱动"></a>03.ADC驱动</h5><p>ADC驱动对微控制器内部模数转换单元进行初始化和控制。它可以提供启动和停止模数转换的服务，分别用来开启和禁用模数转换的触发源。</p>
+<h5 id="04-PWM驱动"><a href="#04-PWM驱动" class="headerlink" title="04.PWM驱动"></a>04.PWM驱动</h5><p>PWM驱动为微控制器PWM模块提供初始化和控制服务，可生成周期和占空比都可变的脉冲。</p>
+<h5 id="05-ICU驱动"><a href="#05-ICU驱动" class="headerlink" title="05.ICU驱动"></a>05.ICU驱动</h5><p>ICU驱动控制的是微控制器的输入捕获单元（Input Capture Unit），有两种模式：正常模式和休眠模式。</p>
+<p>ICU驱动可以提供一下服务：</p>
+<ul>
+<li><p>信号边沿检测及通知；</p>
+</li>
+<li><p>中断唤醒；</p>
+</li>
+<li><p>周期性信号时间的测量；</p>
+</li>
+<li><p>边沿时间戳捕获；</p>
+</li>
+<li><p>边沿&#x2F;脉冲计数</p>
+</li>
+</ul>
+<h5 id="06-OCU驱动"><a href="#06-OCU驱动" class="headerlink" title="06.OCU驱动"></a>06.OCU驱动</h5><p>OCU驱动的作用是对微控制器内部的输出比较单元（Output Compare Unit）进行初始化和控制。当计数器的值到达某个阈值时，OCU模块会自动开始比较并执行相应的操作。</p>
+<p>OCU驱动还可以为下列功能提供服务：</p>
+<ul>
+<li><p>启动或停止输出通道；</p>
+</li>
+<li><p>设定某个阈值；</p>
+</li>
+<li><p>启用或禁用某个通道的通知函数；</p>
+</li>
+<li><p>获取计数器数值；</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/1.1.%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E6%8A%BD%E8%B1%A1%E5%B1%82MCAL(%E9%A9%B1%E5%8A%A8%E5%B1%82)/" data-id="cljljuput0001tgvda6p56q4x" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -181,7 +709,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/02/hello-world/" data-id="cljl6k24y0001i8vdg11r5ied" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/02/hello-world/" data-id="cljljupqj0000tgvd5sjx2lyq" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -224,15 +752,23 @@
       <ul>
         
           <li>
-            <a href="/2023/07/02/float%E7%B1%BB%E5%9E%8B/">(no title)</a>
+            <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2023/07/02/Compiler/">Compiler</a>
+            <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2023/07/02/hello-world/">Hello World</a>
+            <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/">(no title)</a>
           </li>
         
       </ul>

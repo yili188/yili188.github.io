@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="RTE以上，即VFB view，所有的SWC通过RTE总线进行相互连接、调用 RTE以下，即基础软件层BSW  功能：  对底层软件的抽象化 数据的通讯 任务的调度  VFB的具体实现  配置：runnables对OS的tasks的映射 通过RTE的事件触发runnables的运行 生成调用runnables的task代码 对OS操作系统中tasks,events,alarms的配置 根据每个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RTE以上，即VFB view，所有的SWC通过RTE总线进行相互连接、调用 RTE以下，即基础软件层BSW  功能：  对底层软件的抽象化 数据的通讯 任务的调度  VFB的具体实现  配置：runnables对OS的tasks的映射 通过RTE的事件触发runnables的运行 生成调用runnables的task代码 对OS操作系统中tasks,events,alarms的配置 根据每个">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808224700706.png">
+<meta property="og:image" content="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808225218955.png">
+<meta property="og:image" content="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210809222633367.png">
+<meta property="article:published_time" content="2023-07-02T14:49:47.142Z">
+<meta property="article:modified_time" content="2023-07-02T14:48:36.700Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808224700706.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AUTOSAR/2.Runtime environment (RTE)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.142Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808224700706.png" alt="image-20210808224700706"></p>
+<ol>
+<li>RTE以上，即VFB view，所有的SWC通过RTE总线进行相互连接、调用</li>
+<li>RTE以下，即基础软件层BSW</li>
+</ol>
+<p>功能：</p>
+<ol>
+<li>对底层软件的抽象化</li>
+<li>数据的通讯</li>
+<li>任务的调度</li>
+</ol>
+<p>VFB的具体实现</p>
+<ul>
+<li>配置：runnables对OS的tasks的映射</li>
+<li>通过RTE的事件触发runnables的运行</li>
+<li>生成调用runnables的task代码</li>
+<li>对OS操作系统中tasks,events,alarms的配置</li>
+<li>根据每个ECU进行定制</li>
+<li>抽象了OS, 防止SWC直接访问OS和BSW</li>
+</ul>
+<img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210808225218955.png" alt="image-20210808225218955" style="zoom:50%;">
+
+<h4 id="RTE触发事件–-gt-对函数的调用（调用功能）"><a href="#RTE触发事件–-gt-对函数的调用（调用功能）" class="headerlink" title="RTE触发事件–&gt;对函数的调用（调用功能）"></a>RTE触发事件–&gt;对函数的调用（调用功能）</h4><p>RTE触发事件对runnable进行调用</p>
+<ol>
+<li>SWC对函数的调用</li>
+<li>ECU-M模块调用函数改变RTE状态</li>
+<li>回调函数COM</li>
+<li>操作系统事件生成</li>
+</ol>
+<p><img src="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/image-20210809222633367.png" alt="image-20210809222633367"></p>
+<h4 id="RTE数据交互功能"><a href="#RTE数据交互功能" class="headerlink" title="RTE数据交互功能"></a>RTE数据交互功能</h4><ul>
+<li>RTE作为SWC和BSW之间的通信机构</li>
+<li>RTE是VFB的实现（数据交互）<ul>
+<li>Sender-Receiver</li>
+<li>Client-Server</li>
+<li>Intra-ECU and Inter-ECU (via COM)</li>
+<li>RTE implements callbacks of AR-COM</li>
+</ul>
+</li>
+<li>Other features<ul>
+<li>保证数据一致性（exclusive area）–数据校验</li>
+<li>支持简单数据及复杂数据（records 结构体）</li>
+<li>SW-C 可以实现多副本（相同类型的不同SW-C）</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/" data-id="cljljupv30003tgvdddoxb7bs" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/02/AUTOSAR/1.%E5%9F%BA%E7%A1%80%E8%BD%AF%E4%BB%B6%E5%B1%82(BSW)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

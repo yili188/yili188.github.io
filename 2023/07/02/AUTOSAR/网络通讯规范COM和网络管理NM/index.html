@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="关于AUTOSAR的底层驱动、平台OS、平台应用、RTE、应用软件这些和VxWorks653很相似，就不多赘述了。 此处说一下&#x3D;&#x3D;AUTOSAR独有的网络通讯规范和网络管理模块NM&#x3D;&#x3D; 一、网络通讯规范COMAUTOSAR COM是AUTOSAR标准的一部分，它是从OSEK COM标准的基础上发展而来的。AUTOSAR COM提供了一种标准化的访问汽车通讯系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="关于AUTOSAR的底层驱动、平台OS、平台应用、RTE、应用软件这些和VxWorks653很相似，就不多赘述了。 此处说一下&#x3D;&#x3D;AUTOSAR独有的网络通讯规范和网络管理模块NM&#x3D;&#x3D; 一、网络通讯规范COMAUTOSAR COM是AUTOSAR标准的一部分，它是从OSEK COM标准的基础上发展而来的。AUTOSAR COM提供了一种标准化的访问汽车通讯系">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-02T14:49:47.428Z">
+<meta property="article:modified_time" content="2021-08-07T13:02:42.785Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AUTOSAR/网络通讯规范COM和网络管理NM" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/" class="article-date">
+  <time class="dt-published" datetime="2023-07-02T14:49:47.428Z" itemprop="datePublished">2023-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>关于AUTOSAR的底层驱动、平台OS、平台应用、RTE、应用软件这些和VxWorks653很相似，就不多赘述了。</p>
+<p>此处说一下&#x3D;&#x3D;AUTOSAR独有的网络通讯规范和网络管理模块NM&#x3D;&#x3D;</p>
+<h3 id="一、网络通讯规范COM"><a href="#一、网络通讯规范COM" class="headerlink" title="一、网络通讯规范COM"></a>一、网络通讯规范COM</h3><p>AUTOSAR COM是AUTOSAR标准的一部分，它是从OSEK COM标准的基础上发展而来的。AUTOSAR COM提供了一种标准化的访问汽车通讯系统和ECU（Electronic Control Unit）通讯的方式，提出了一个在不同速率的总线网络之间进行数据交换的方法。它为汽车控制单元应用软件提供了一个统一的通信环境，为内部和外部通信定义了公共的软件通信接口和行为，增强了应用软件模块的可移植性。</p>
+<p>依据AUTOSAR的描述，这个跟IMA的RDIU很类似。实现不同数据协议和速率的数据的相互装换，然后发向目的ECU。</p>
+<p>AUTOSAR COM提供了基本的通信服务，它有明确的上层模块RTE(Runtime Environment)和下层模块PDU Router。</p>
+<p>在发送过程中，应用层调用COM层提供的信号或信号组发送函数，根据配置，信号或信号组的数据经过字节顺序转换后被更新到I-PDU（Interaction Layer Protocol Data Unit）中相应的位置中。AUTOSAR COM规范中同一I-PDU可以设置两种发送模式，对其中各信号的传输模式条件进行计算，I-PDU选择其中一种发送模式进行发送。然后启动发送死限监控，调用PduR_ComTransmit()函数将I-PDU发送到底层。</p>
+<p>在接收过程中，当底层接收到I-PDU时，底层将调用COM层提供的指示函数Com_RxIndication()，取消并重启接收死限监控，将I-PDU的数据从底层拷贝到COM中。调用信号或信号组的接收函数后，该I-PDU中的信号或信号组将经过字节顺序转换、符号扩展和接收过滤后，数据被拷贝到应用层。</p>
+<h4 id="通信系统核心模块的实现"><a href="#通信系统核心模块的实现" class="headerlink" title="通信系统核心模块的实现"></a>通信系统核心模块的实现</h4><p>通信系统主要实现信号或信号组的收发功能，以下主要介绍信号发送的实现。首先简要介绍一下AUTOSAR COM中特有的传输模式切换。</p>
+<h4 id="传输模式切换"><a href="#传输模式切换" class="headerlink" title="传输模式切换"></a>传输模式切换</h4><p>AUTOSAR COM规范定义了4种信号传输模式：</p>
+<ol>
+<li>直接&#x2F;N次传输模式</li>
+<li>周期传输模式</li>
+<li>混合传输模式</li>
+<li>None传输模式。</li>
+</ol>
+<p>在AUTOSAR COM规范中允许为每个I-PDU静态配置两种不同的传输模式。</p>
+<p>在AUTOSAR COM规范中通过传输模式切换，来选择I-PDU中的其中一种传输模式进行传输。</p>
+<ul>
+<li>首先使用过滤机制判断I-PDU中各信号的发送模式条件，同时更新I-PDU中的信号；</li>
+<li>再通过各信号的判断结果来计算该I-PDU的TMS（transmission mode selector）。若至少有一个C( Si,IPDUk)为True，则TMS为True；若所有C(Si,IPDUk)都为False，则TMS为False。其中C(Si,IPDUk)为传输模式条件该条件与IPDUk中的信号Si相关。</li>
+</ul>
+<p>下面通过一个用例简要说明传输模式的切换。</p>
+<p>用例中进行周期传输和直接&#x2F;N次传输之间的切换（N&#x3D;3）。<br>根据I-PDU的传输配置，当TMS（transmission mode selector）判断为真时，设置传输模式为周期传输，反之为直接&#x2F;N次传输。上层给定值V&#x3D;a（此时TMS判断为真），进行周期传输；当值V更新为b时（此时TMS判断为假），进行直接&#x2F;N次传输模式，传输三次。由图3可知，随着V值的更新该I-PDU的传输模式在这两种传输模式之间切换。</p>
+<h4 id="信号发送的实现"><a href="#信号发送的实现" class="headerlink" title="信号发送的实现"></a>信号发送的实现</h4><ul>
+<li>首先根据该信号的相关配置，判定其是内部消息还是外部消息。</li>
+<li>对于内部发送，直接将信号数据复制到接收信号数据区，并执行通知操作；</li>
+<li>对于外部发送，若该信号发送属性为触发，则该信号所属的I-PDU将立即发送（除非该I-PDU发送模式为周期传输模式），若该信号发送属性为延迟，则不进行传输，发送时，信号经过字节顺序转换后数据被复制到I-PDU中，同时设置相关更新位信息，然后根据该I-PDU的TMS切换传输模式，进行传输并设置启动相关定时器。各传输模式的传输过程与OSEK COM中大致相同。</li>
+</ul>
+<h4 id="信号接收的实现"><a href="#信号接收的实现" class="headerlink" title="信号接收的实现"></a>信号接收的实现</h4><ul>
+<li>首先判定是内部信号还是外部信号。</li>
+<li>对于内部接收，直接将信号数据复制到接收信号数据区；</li>
+<li>对于外部接收，首先判断对于的I-PDU组是否启动，若启动，返回E_OK，否则返回COM_STOP，取消并重启该I-PDU的相关死限监控定时器，将数据复制到I-PDU数据区，I-PDU中的信号经过字节书序转换、符号扩展和过滤机制后，复制到接收信号数据区，再执行通知操作，通知上层软件调用相关API函数接收信号。</li>
+</ul>
+<h3 id="二-网络管理NM"><a href="#二-网络管理NM" class="headerlink" title="二. 网络管理NM"></a>二. 网络管理NM</h3><p>这里的NM主要是针对Can协议的网路管理。</p>
+<p>AUTOSAR CanNM的核心思想主要归纳为以下两条：</p>
+<ol>
+<li><p>如果节点需要保持通信，则节点需要周期的发送NMPDUs，否则停止发送NMPDUs</p>
+</li>
+<li><pre><code>如果总线上的所有节点不需要使用总线，那么总线上过了一段时间没有NMPDUs时，则会进入Bus-Sleep Mode。
+</code></pre>
+</li>
+</ol>
+<h4 id="工作模式和状态"><a href="#工作模式和状态" class="headerlink" title="工作模式和状态"></a>工作模式和状态</h4><p>CanNm一共有三个工作模式</p>
+<ol>
+<li><p>Network Mode</p>
+</li>
+<li><p>PrepareBus-Sleep Mode</p>
+</li>
+<li><p>Bus-Sleep Mode</p>
+</li>
+</ol>
+<p>模式的改变应该通过回调函数通知上层。</p>
+<p>下面单独说每种模式</p>
+<h5 id="（1）Network-Mode"><a href="#（1）Network-Mode" class="headerlink" title="（1）Network Mode"></a>（1）Network Mode</h5><p>Network Mode又包括三个内部状态</p>
+<ol>
+<li>Repeat Message State</li>
+<li>Normal Operation State</li>
+<li>Ready Sleep State</li>
+</ol>
+<p>①Repeat Message State</p>
+<p>这个模式被用来确保从Bus-Sleep or Prepare Bus-Sleep到Network Mode的节点被总线上面其他节点发现。这个状态可以用来检测总线上的节点。<br>当进入Repeat Message State时，节点应该开始传送NMPDUs。<br>在Repeat Message State时，当NM-Timeout Timer溢出，CanNm模块应该重载Timer。<br>CanNm模块应该在Repeat Message State 下保持一段时间，这段时间可以通过CANNM_REPEAT_MESSAGE_TIME来进行配置。<br>当离开Repeat Message State的时候，如果节点需要通信，则进入Normal Operation State；如果节点不需要通信，则进入Ready Sleep State。并且清空Repeat Message Bit。</p>
+<p>②Normal Operation State</p>
+<p>这个状态可以保持总线处于唤醒状态。从Ready sleep state进入这个状态的时候应该发送NMPDUs。<br>在Normal Operation State当NM-Timeout Timer溢出，CanNm模块应该重载Timer。<br>如果节点不需要使用通信，则网络应该被释放，节点应该进入Ready Sleep State。<br>如果节点接收到Repeat Message Request Bit，则节点进入Repeat Message State。如果节点自身需要进入Repeat Message State，则该节点进入Repeat Message State并且设置Repeat Message Request Bit。</p>
+<p>③ReadySleep State</p>
+<p>这个状态是为了如果本节点已经准备释放总线，而其他节点还需要使用总线的时候，在这个状态下等待其他总线上的节点进入Perpere Bus-Sleep Mode。进入这个状态之后，CanNm模块应该停止NMPDUs的传送。<br>如果NM-Timeout Timer溢出，节点将会进入Prepare Bus-Sleep Mode。<br>如果该节点需要使用总线，则节点进入Nomal Operation State。<br>如果节点接收到Repeat Message Request Bit，则节点进入Repeat Message State。如果节点自身需要进入Repeat Message State，则该节点进入Repeat Message State并且设置Repeat Message Request Bit。</p>
+<h5 id="（2）PrepareBus-Sleep-Mode"><a href="#（2）PrepareBus-Sleep-Mode" class="headerlink" title="（2）PrepareBus-Sleep Mode"></a>（2）PrepareBus-Sleep Mode</h5><p>这个状态是为了等待总线上的所有节点能够在进入Bus-Sleep Mode之前，有时间停止节点的active状态如清空队列中为发送的报文。在Prepare Bus –Sleep Mode下，所有节点都静默下来。</p>
+<p>当节点进入PrepareBus Mode时，应该通知上层应用。通过配置CANNM_WAIT_BUS_SLEEP_TIME参数，可以改变节点在PrepareBus-Sleep Mode停留的时间，在这段时间之后节点将会进入其他状态。</p>
+<p>在Prepare Bus-Sleep Mode下面接收到NMPDU或者被上层应用请求通信时，节点将进入Network Mode中的Normal operation State。</p>
+<h5 id="（3）Bus-SleepMode"><a href="#（3）Bus-SleepMode" class="headerlink" title="（3）Bus-SleepMode"></a>（3）Bus-SleepMode</h5><p>Bus-Sleep Mode的目的是当没有消息被传送的时候可以减少能量的消耗。</p>
+<p>在Bus-Sleep Mode下面，节点可以被唤醒（如本地唤醒源和CAN线唤醒源）。CANNM_TIMEOUT_TIME+CANNM_WAIT_BUS_SLEEP_TIME两个参数在整个总线上面的节点都应该时一样的配置，保证了总线上的节点能够统一的进行休眠。</p>
+<p>当进入Bus-Sleep Mode时候，应该通知上层应用。</p>
+<p>在Bus-Sleep Mode下，如果成功接收到NMPDU，CAN NM模块应该调用Nm_NetworkStartIndication。</p>
+<p>如果CanNm_PassiveStartUp被调用，则CAN NM模块进入Network Mode 中的Repeat Message State。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/" data-id="cljljupv50006tgvd1on8g094" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E8%BD%AF%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E7%BD%91%E7%BB%9C%E9%80%9A%E8%AE%AF%E8%A7%84%E8%8C%83COM%E5%92%8C%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86NM/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E6%9E%B6%E6%9E%84%E8%AF%8A%E6%96%AD%E5%8A%9F%E8%83%BD/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B1%BD%E8%BD%A6%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%A6%81%E7%94%A8AutoSar/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/02/AUTOSAR/2.Runtime%20environment%20(RTE)/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
